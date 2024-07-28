@@ -6,24 +6,35 @@ import model.entities.StudentUser;
 import model.entities.User;
 
 import java.util.Date;
+import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) {
 
-        // books
-        Book b1 = new Book(1, "book 1", new Date(), new Date());
-        Book b2 = new Book(2, "book 2", new Date(), new Date());
+        Scanner in = new Scanner(System.in);
 
-        // students
-        StudentUser u1 = new StudentUser(1, "joao Victor", "jotadev", "joao@gmail.com", "1234");
+        while (true) {
 
-        u1.insertIntoList(b1);
-        u1.insertIntoList(b2);
+            // UI
+            UI.clearScreen();
+            UI.ShowMainMenu();
+            System.out.print("> enter a option: ");
+            int option = in.nextInt();
 
-        System.out.println(u1);
-
-        // inited connection
-        DB.getConnection();
-        System.out.println("database connected");
+            // directing to the chosen option
+            switch (option) {
+                case 1:
+                    UI.clearScreen();
+                    System.out.println("under construction!");
+                    break;
+                case 2:
+                    UI.clearScreen();
+                    Environments.openEnvironmentStudent(in);
+                    break;
+                case 3:
+                    System.out.println("closing system...");
+                    return;
+            }
+        }
     }
 }
