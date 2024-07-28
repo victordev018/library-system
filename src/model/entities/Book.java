@@ -1,9 +1,12 @@
 package model.entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 public class Book {
+
+    private static SimpleDateFormat fmt = new SimpleDateFormat("dd:MM:yyyy HH:mm:ss");
 
     // attributes
     private Integer id;
@@ -75,8 +78,8 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", withdrawDate=" + withdrawDate +
-                ", deliveryDate=" + deliveryDate +
+                ", withdrawDate=" + fmt.format(withdrawDate) +
+                ", deliveryDate=" + fmt.format(deliveryDate) +
                 '}';
     }
 }
