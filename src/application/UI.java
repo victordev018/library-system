@@ -16,7 +16,7 @@ public class UI {
 
     public static void showStudentEnvironment(){
         System.out.println("""
-                > Welcome student environment
+                Welcome student environment
                 > 1 - Login                            \s
                 > 2 - Register User                    \s
                 > 3 - Back                             \s
@@ -26,7 +26,8 @@ public class UI {
 
     // clear screen
     public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
     }
 }
