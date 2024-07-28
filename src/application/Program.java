@@ -1,5 +1,6 @@
 package application;
 
+import database.DB;
 import model.entities.Book;
 import model.entities.StudentUser;
 import model.entities.User;
@@ -20,5 +21,9 @@ public class Program {
         u1.insertIntoList(b2);
 
         System.out.println(u1);
+
+        // inited connection
+        DB.getConnection();
+        System.out.println("database connected");
     }
 }
