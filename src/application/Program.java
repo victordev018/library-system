@@ -29,9 +29,10 @@ public class Program {
                     break;
                 case 2:
                     UI.clearScreen();
-                    Environments.openEnvironmentStudent(in);
+                    Environments.openEnvironmentStudentOfLogin(in);
                     break;
                 case 3:
+                    DB.closeConnection();
                     System.out.println("closing system...");
                     return;
             }

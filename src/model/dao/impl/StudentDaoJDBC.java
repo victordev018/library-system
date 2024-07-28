@@ -1,11 +1,14 @@
 package model.dao.impl;
 
+import database.DB;
 import database.DBException;
 import model.dao.StudentDao;
 import model.entities.StudentUser;
+import model.entities.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StudentDaoJDBC implements StudentDao {
@@ -17,7 +20,7 @@ public class StudentDaoJDBC implements StudentDao {
     }
 
     @Override
-    public boolean insert(StudentUser obj) {
+    public boolean insert(User obj) {
 
         PreparedStatement ps = null;
 
@@ -45,5 +48,50 @@ public class StudentDaoJDBC implements StudentDao {
         catch (SQLException e){
             throw new DBException(e.getMessage());
         }
+        finally {
+            DB.closeStatement(ps);
+        }
+    }
+
+    @Override
+    public StudentUser findByUserName(String userName) {
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            ps = conn.prepareStatement(
+                    "select * from student "
+                       +"where userName = ?"
+            );
+
+            ps.setString(1, userName);
+            rs = ps.executeQuery();
+
+            if (rs.next()){
+                StudentUser obj = instantiateStudent(rs);
+                return obj;
+            }
+            return null;
+        }
+        catch (SQLException e){
+            throw new DBException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(ps);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    // instantiate StudentUser
+    private static StudentUser instantiateStudent(ResultSet rs) throws SQLException {
+        StudentUser obj = new StudentUser();
+        obj.setId(rs.getInt("Id"));
+        obj.setFullName(rs.getString("FullName"));
+        obj.setUserName(rs.getString("UserName"));
+        obj.setEmail(rs.getString("Email"));
+        obj.setPassword(rs.getString("Password"));
+        return obj;
     }
 }

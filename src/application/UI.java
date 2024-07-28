@@ -24,6 +24,15 @@ public class UI {
         );
     }
 
+    // FOR ALL
+    public static void screenErrorDataLogin(String messageError){
+        System.out.println("\n" + messageError + "\n" +
+                """
+                > 1 - try again             \s
+                > 2 - back                  \s
+                """);
+    }
+
     // clear screen
     public static void clearScreen() {
         for (int i = 0; i < 50; i++) {

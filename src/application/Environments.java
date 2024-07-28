@@ -11,7 +11,7 @@ public class Environments {
 
     // STUDENT
 
-    public static void openEnvironmentStudent(Scanner in) {
+    public static void openEnvironmentStudentOfLogin(Scanner in) {
 
         while (true) {
             UI.clearScreen();
@@ -23,7 +23,7 @@ public class Environments {
             switch (option) {
                 case 1:
                     UI.clearScreen();
-                    System.out.println("Login");
+                    studentLogin(in);
                     break;
                 case 2:
                     UI.clearScreen();
@@ -35,6 +35,25 @@ public class Environments {
                     return;
             }
         }
+    }
+
+    private static void studentLogin(Scanner in){
+        UI.clearScreen();
+        System.out.print(">       Student       <");
+        StudentUser accountAccess = (StudentUser) tryToLogIn(new StudentUser(), in);
+        if (accountAccess != null){
+            System.out.println("Access granted");
+        }
+        else {
+            System.out.println();
+            UI.screenErrorDataLogin("! unregistered user !");
+            System.out.print("> Enter a option: ");
+            int option = in.nextInt();
+            if (option == 1){
+                studentLogin(in);
+            }
+        }
+
     }
 
     // FOR ALL
@@ -68,5 +87,38 @@ public class Environments {
         }
         System.out.println("Failed registration!\nPress enter to go back");
         in.nextLine();
+    }
+
+    private static User tryToLogIn(User user, Scanner in){
+
+        UI.clearScreen();
+        System.out.println("\n----- Login ------");
+        System.out.print("> username: ");
+        in.nextLine();
+        user.setUserName(in.nextLine());
+        System.out.print("> password: ");
+        user.setPassword(in.nextLine());
+        User obj2 = AccountService.searchLoginData(user);
+
+        if (obj2 != null){
+
+            // if correct password and user
+            if (checkPasswordAndUserName(user, obj2)){
+                return obj2;
+            }
+            // data incorrect
+            UI.screenErrorDataLogin("! Email or password incorrect !");
+            System.out.print("> Enter a option: ");
+            int option = in.nextInt();
+            if (option == 1) {
+                tryToLogIn(user, in);
+            }
+        }
+        return obj2;
+    }
+
+    private static Boolean checkPasswordAndUserName(User u1, User u2){
+        return u1.getUserName().equals(u2.getUserName())
+                && u1.getPassword().equals(u2.getPassword());
     }
 }
