@@ -16,6 +16,7 @@ public class Program {
         while (true) {
 
             // UI
+            UI.clearScreen();
             UI.ShowMainMenu();
             System.out.print("> enter a option: ");
             int option = in.nextInt();
@@ -34,7 +35,6 @@ public class Program {
                     System.out.println("closing system...");
                     return;
             }
-            UI.clearScreen();
         }
     }
 }
