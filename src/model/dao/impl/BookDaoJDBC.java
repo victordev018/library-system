@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +39,9 @@ public class BookDaoJDBC implements BookDao {
             rs = ps.executeQuery();
 
             List<Book> list = new ArrayList<>();
-
             while (rs.next()){
                 list.add(instantiateBook(rs));
             }
-
             return list;
         }
         catch (SQLException e){
@@ -52,11 +51,12 @@ public class BookDaoJDBC implements BookDao {
 
     // instantiate Book
     private static Book instantiateBook(ResultSet rs) throws SQLException {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Book book = new Book();
         book.setId(rs.getInt("Id"));
         book.setTitle(rs.getString("Title"));
-        book.setWithdrawDate(LocalDateTime.parse(rs.getDate("WithDrawDate").toString()));
-        book.setDeliveryDate(LocalDateTime.parse(rs.getDate("DeliveryDate").toString()));
+        book.setWithdrawDate(LocalDateTime.parse(rs.getString("WithDrawDate"), fmt));
+        book.setDeliveryDate(LocalDateTime.parse(rs.getString("DeliveryDate"), fmt));
         return book;
     }
 }

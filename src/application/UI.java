@@ -1,5 +1,7 @@
 package application;
 
+import model.entities.StudentUser;
+
 public class UI {
 
     // main menu
@@ -31,6 +33,11 @@ public class UI {
                 > 2 - Request renewal
                 > 3 - Back
                 """);
+    }
+
+    public static void showStudentBooks(StudentUser user){
+        System.out.println("> books in possession: ");
+        user.getList().forEach(System.out::println);
     }
 
     // FOR ALL

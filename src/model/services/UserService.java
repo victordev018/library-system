@@ -2,11 +2,10 @@ package model.services;
 
 import model.dao.DaoFactory;
 import model.dao.StudentDao;
-import model.entities.ManagerUser;
 import model.entities.StudentUser;
 import model.entities.User;
 
-public class AccountService {
+public class UserService {
 
     // register
     public static Boolean createRegister(User obj){

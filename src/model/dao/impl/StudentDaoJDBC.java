@@ -70,8 +70,7 @@ public class StudentDaoJDBC implements StudentDao {
             rs = ps.executeQuery();
 
             if (rs.next()){
-                StudentUser obj = instantiateStudent(rs);
-                return obj;
+                return instantiateStudent(rs);
             }
             return null;
         }

@@ -1,10 +1,13 @@
 package application;
 
+import model.entities.Book;
 import model.entities.ManagerUser;
 import model.entities.StudentUser;
 import model.entities.User;
-import model.services.AccountService;
+import model.services.BookService;
+import model.services.UserService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Environments {
@@ -31,7 +34,6 @@ public class Environments {
                     break;
                 case 3:
                     UI.clearScreen();
-                    System.out.println("closing system...");
                     return;
             }
         }
@@ -59,9 +61,44 @@ public class Environments {
     }
 
     private static void studentMenu(StudentUser user, Scanner in){
-        UI.studentMenu();
-        System.out.print("> Enter a option: ");
-        int option = in.nextInt();
+
+        while (true) {
+            UI.studentMenu();
+            System.out.print("> Enter a option: ");
+            int option = in.nextInt();
+
+            switch (option) {
+                case 1:
+                    showStudentBooks(user, in);
+                    break;
+                case 2:
+                    System.out.println("request renewal");
+                    break;
+                case 3:
+                    return;
+            }
+            UI.clearScreen();
+        }
+    }
+
+    private static void showStudentBooks(StudentUser user, Scanner in){
+
+        List<Book> bookList = BookService.getStudentBooks(user);
+        if (!bookList.isEmpty()){
+            user.getList().addAll(bookList);
+            UI.clearScreen();
+            UI.showStudentBooks(user);
+            System.out.print("> press enter to go back");
+            in.nextLine();
+            in.nextLine();
+        }
+        else{
+            UI.clearScreen();
+            System.out.println("\n! no books !");
+            System.out.print("> press enter to go back");
+            in.nextLine();
+            in.nextLine();
+        }
     }
 
     // FOR ALL
@@ -88,7 +125,7 @@ public class Environments {
             registerAccount(user, in);
         }
 
-        if (AccountService.createRegister(obj)){
+        if (UserService.createRegister(obj)){
             System.out.println("successful registration!\nPress enter to go back");
             in.nextLine();
             return;
@@ -106,7 +143,7 @@ public class Environments {
         user.setUserName(in.nextLine());
         System.out.print("> password: ");
         user.setPassword(in.nextLine());
-        User obj2 = AccountService.searchLoginData(user);
+        User obj2 = UserService.searchLoginData(user);
 
         if (obj2 != null){
 
@@ -115,7 +152,8 @@ public class Environments {
                 return obj2;
             }
             // data incorrect
-            UI.screenErrorDataLogin("! Email or password incorrect !");
+            UI.clearScreen();
+            UI.screenErrorDataLogin("! Password incorrect !");
             System.out.print("> Enter a option: ");
             int option = in.nextInt();
             if (option == 1) {

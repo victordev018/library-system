@@ -1,24 +1,24 @@
 package model.entities;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Book {
 
-    private static SimpleDateFormat fmt = new SimpleDateFormat("dd:MM:yyyy HH:mm:ss");
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     // attributes
     private Integer id;
     private String title;
-    private Date withdrawDate;
-    private Date deliveryDate;
+    private LocalDateTime withdrawDate;
+    private LocalDateTime deliveryDate;
 
     // constructor
     public Book(){
     }
 
-    public Book(Integer id, String title, Date withdrawDate, Date deliveryDate) {
+    public Book(Integer id, String title, LocalDateTime withdrawDate, LocalDateTime deliveryDate) {
         this.id = id;
         this.title = title;
         this.withdrawDate = withdrawDate;
@@ -42,19 +42,19 @@ public class Book {
         this.title = title;
     }
 
-    public Date getWithdrawDate() {
+    public LocalDateTime getWithdrawDate() {
         return withdrawDate;
     }
 
-    public void setWithdrawDate(Date withdrawDate) {
+    public void setWithdrawDate(LocalDateTime withdrawDate) {
         this.withdrawDate = withdrawDate;
     }
 
-    public Date getDeliveryDate() {
+    public LocalDateTime getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
+    public void setDeliveryDate(LocalDateTime deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
@@ -75,11 +75,11 @@ public class Book {
     // toString
     @Override
     public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", withdrawDate=" + fmt.format(withdrawDate) +
-                ", deliveryDate=" + fmt.format(deliveryDate) +
-                '}';
+        return "-------------------------------------"+
+               "\n| Title: " + getTitle()+
+               "\n| WithDrawDate: " + getWithdrawDate().format(fmt)+
+               "\n| DeliveryDate: " + getDeliveryDate().format(fmt)+
+               "\n-------------------------------------";
+
     }
 }
