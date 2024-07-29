@@ -18,10 +18,19 @@ public class UI {
         System.out.println("""
                 Welcome student environment
                 > 1 - Login                            \s
-                > 2 - Register User                    \s
+                > 2 - Register user                    \s
                 > 3 - Back                             \s
                 """
         );
+    }
+
+    public static void studentMenu() {
+        System.out.println("""
+                -------- Student Menu ---------
+                > 1 - My books
+                > 2 - Request renewal
+                > 3 - Back
+                """);
     }
 
     // FOR ALL

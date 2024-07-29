@@ -42,7 +42,9 @@ public class Environments {
         System.out.print(">       Student       <");
         StudentUser accountAccess = (StudentUser) tryToLogIn(new StudentUser(), in);
         if (accountAccess != null){
-            System.out.println("Access granted");
+            UI.clearScreen();
+            System.out.println("Access granted\n");
+            studentMenu(accountAccess, in);
         }
         else {
             System.out.println();
@@ -54,6 +56,12 @@ public class Environments {
             }
         }
 
+    }
+
+    private static void studentMenu(StudentUser user, Scanner in){
+        UI.studentMenu();
+        System.out.print("> Enter a option: ");
+        int option = in.nextInt();
     }
 
     // FOR ALL
