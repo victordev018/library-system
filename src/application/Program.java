@@ -1,11 +1,6 @@
 package application;
 
 import database.DB;
-import model.entities.Book;
-import model.entities.StudentUser;
-import model.entities.User;
-
-import java.util.Date;
 import java.util.Scanner;
 
 public class Program {

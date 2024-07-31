@@ -9,6 +9,7 @@ import model.services.UserService;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Function;
 
 public class Environments {
 
@@ -48,16 +49,6 @@ public class Environments {
             System.out.println("Access granted\n");
             studentMenu(accountAccess, in);
         }
-        else {
-            System.out.println();
-            UI.screenErrorDataLogin("! unregistered user !");
-            System.out.print("> Enter a option: ");
-            int option = in.nextInt();
-            if (option == 1){
-                studentLogin(in);
-            }
-        }
-
     }
 
     private static void studentMenu(StudentUser user, Scanner in){
@@ -134,7 +125,8 @@ public class Environments {
         in.nextLine();
     }
 
-    private static User tryToLogIn(User user, Scanner in){
+    // TODO -> crie uma sobrecaega deste método que receba um objeto do tipo MAnagerUser
+    private static User tryToLogIn(StudentUser user, Scanner in){
 
         UI.clearScreen();
         System.out.println("\n----- Login ------");
@@ -145,10 +137,10 @@ public class Environments {
         user.setPassword(in.nextLine());
         User obj2 = UserService.searchLoginData(user);
 
-        if (obj2 != null){
+        if (obj2 != null) {
 
             // if correct password and user
-            if (checkPasswordAndUserName(user, obj2)){
+            if (checkPasswordAndUserName(user, obj2)) {
                 return obj2;
             }
             // data incorrect
@@ -156,11 +148,20 @@ public class Environments {
             UI.screenErrorDataLogin("! Password incorrect !");
             System.out.print("> Enter a option: ");
             int option = in.nextInt();
-            if (option == 1) {
-                tryToLogIn(user, in);
+            if (option != 2) {
+                studentLogin(in);
             }
         }
-        return obj2;
+        else {
+            System.out.println();
+            UI.screenErrorDataLogin("! unregistered user !");
+            System.out.print("> Enter a option: ");
+            int option = in.nextInt();
+            if (option == 1) {
+                studentLogin(in);
+            }
+        }
+        return null;
     }
 
     private static Boolean checkPasswordAndUserName(User u1, User u2){
