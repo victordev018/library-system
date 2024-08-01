@@ -25,6 +25,16 @@ public class UI {
                 """);
     }
 
+    public static void managerMenu(){
+        System.out.println("""
+                -------- Manager Menu ----------
+                > 1 - Register withdraw
+                > 2 - Show withdraw history
+                > 3 - Register delivery
+                > 4 - Back
+                """);
+    }
+
     // STUDENT
 
     public static void showStudentEnvironment(){

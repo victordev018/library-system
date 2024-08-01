@@ -28,6 +28,9 @@ public class UserService {
             StudentDao studentDao = DaoFactory.createStudentDao();
             return studentDao.findByUserName(obj.getUserName());
         }
-        return null;    // TODO : impelemente o mesmo para o ManageUser
+
+        // case instance of ManagerUser
+        ManagerDao managerDao = DaoFactory.createManagerDao();
+        return managerDao.findByUserName(obj.getUserName());
     }
 }

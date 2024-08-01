@@ -1,11 +1,15 @@
 package model.dao.impl;
 
+import database.DB;
 import database.DBException;
 import model.dao.ManagerDao;
+import model.entities.ManagerUser;
+import model.entities.StudentUser;
 import model.entities.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ManagerDaoJDBC implements ManagerDao {
@@ -42,5 +46,49 @@ public class ManagerDaoJDBC implements ManagerDao {
         catch (SQLException e){
             throw new DBException(e.getMessage());
         }
+        finally {
+            DB.closeStatement(ps);
+        }
+    }
+
+    @Override
+    public ManagerUser findByUserName(String userName) {
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            ps = conn.prepareStatement(
+                    "select * from manager "
+                       +"where UserName = ?"
+            );
+
+            ps.setString(1, userName);
+            rs = ps.executeQuery();
+
+            if (rs.next()){
+                return instantiateManager(rs);
+            }
+            return null;
+        }
+        catch (SQLException e){
+            throw new DBException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(ps);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    // instantiate ManagerUer
+    private static ManagerUser instantiateManager(ResultSet rs) throws SQLException {
+        ManagerUser obj = new ManagerUser();
+        obj.setId(rs.getInt("Id"));
+        obj.setFullName(rs.getString("FullName"));
+        obj.setUserName(rs.getString("UserName"));
+        obj.setEmail(rs.getString("Email"));
+        obj.setPassword(rs.getString("Password"));
+        return obj;
     }
 }

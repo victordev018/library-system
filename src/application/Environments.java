@@ -25,7 +25,7 @@ public class Environments {
             // directing to the chosen option
             switch (option){
                 case 1:
-                    System.out.println("Login");
+                    managerLogin(in);
                     break;
                 case 2:
                     UI.clearScreen();
@@ -35,6 +35,41 @@ public class Environments {
                     UI.clearScreen();
                     return;
             }
+        }
+    }
+
+    public static void managerLogin(Scanner in){
+        UI.clearScreen();
+        System.out.print(">       Manager       <");
+        ManagerUser accountAccess = (ManagerUser) tryToLogIn(new ManagerUser(), in);
+        if (accountAccess != null){
+            UI.clearScreen();
+            System.out.println("Access granted\n");
+            managerMenu(accountAccess, in);
+        }
+    }
+
+    public static void managerMenu(ManagerUser user, Scanner in){
+
+        while (true){
+            UI.managerMenu();
+            System.out.print("> Enter a option: ");
+            int option = in.nextInt();
+
+            switch (option){
+                case 1:
+                    System.out.println("register withdraw");
+                    break;
+                case 2:
+                    System.out.println("show withdraw history");
+                    break;
+                case 3:
+                    System.out.println("register delivery");
+                    break;
+                case 4:
+                    return;
+            }
+            UI.clearScreen();
         }
     }
 
@@ -149,7 +184,6 @@ public class Environments {
         in.nextLine();
     }
 
-    // TODO -> crie uma sobrecaega deste método que receba um objeto do tipo MAnagerUser
     private static User tryToLogIn(StudentUser user, Scanner in){
 
         UI.clearScreen();
@@ -183,6 +217,44 @@ public class Environments {
             int option = in.nextInt();
             if (option == 1) {
                 studentLogin(in);
+            }
+        }
+        return null;
+    }
+
+    private static User tryToLogIn(ManagerUser user, Scanner in){
+
+        UI.clearScreen();
+        System.out.println("\n----- Login ------");
+        System.out.print("> username: ");
+        in.nextLine();
+        user.setUserName(in.nextLine());
+        System.out.print("> password: ");
+        user.setPassword(in.nextLine());
+        User obj2 = UserService.searchLoginData(user);
+
+        if (obj2 != null) {
+
+            // if correct password and user
+            if (checkPasswordAndUserName(user, obj2)) {
+                return obj2;
+            }
+            // data incorrect
+            UI.clearScreen();
+            UI.screenErrorDataLogin("! Password incorrect !");
+            System.out.print("> Enter a option: ");
+            int option = in.nextInt();
+            if (option != 2) {
+                managerLogin(in);
+            }
+        }
+        else {
+            System.out.println();
+            UI.screenErrorDataLogin("! unregistered user !");
+            System.out.print("> Enter a option: ");
+            int option = in.nextInt();
+            if (option == 1) {
+                managerLogin(in);
             }
         }
         return null;
