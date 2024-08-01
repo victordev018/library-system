@@ -14,6 +14,17 @@ public class UI {
                 """);
     }
 
+    // MANAGER
+
+    public static void showManagerEnvironment(){
+        System.out.println("""
+                Welcome manager environment
+                > 1 - Login                             \s
+                > 2 - Register user                     \s
+                > 3 - Back                              \s
+                """);
+    }
+
     // STUDENT
 
     public static void showStudentEnvironment(){

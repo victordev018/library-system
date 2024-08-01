@@ -1,6 +1,7 @@
 package model.services;
 
 import model.dao.DaoFactory;
+import model.dao.ManagerDao;
 import model.dao.StudentDao;
 import model.entities.StudentUser;
 import model.entities.User;
@@ -14,8 +15,10 @@ public class UserService {
             StudentDao studentDao = DaoFactory.createStudentDao();
             return studentDao.insert(obj);
         }
-        // TODO faça o mesmo com ManagerUserDao
-        return false;
+
+        // case instance of ManagerUser
+        ManagerDao managerDao = DaoFactory.createManagerDao();
+        return managerDao.insert(obj);
     }
 
     // login

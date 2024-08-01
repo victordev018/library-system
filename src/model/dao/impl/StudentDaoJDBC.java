@@ -40,10 +40,7 @@ public class StudentDaoJDBC implements StudentDao {
 
             int rowsAffected = ps.executeUpdate();
 
-            if (rowsAffected > 0){
-                return true;
-            }
-            return false;
+            return rowsAffected > 0;
         }
         catch (SQLException e){
             throw new DBException(e.getMessage());

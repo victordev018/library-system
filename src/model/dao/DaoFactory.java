@@ -2,12 +2,17 @@ package model.dao;
 
 import database.DB;
 import model.dao.impl.BookDaoJDBC;
+import model.dao.impl.ManagerDaoJDBC;
 import model.dao.impl.StudentDaoJDBC;
 
 public class DaoFactory {
 
     public static StudentDao createStudentDao(){
         return new StudentDaoJDBC(DB.getConnection());
+    }
+
+    public static ManagerDao createManagerDao(){
+        return new ManagerDaoJDBC(DB.getConnection());
     }
 
     public static BookDao createBookDao(){

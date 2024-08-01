@@ -20,7 +20,7 @@ public class Program {
             switch (option) {
                 case 1:
                     UI.clearScreen();
-                    System.out.println("under construction!");
+                    Environments.openEnvironmentManagerOfLogin(in);
                     break;
                 case 2:
                     UI.clearScreen();

@@ -9,9 +9,34 @@ import model.services.UserService;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Function;
 
 public class Environments {
+
+    // MANAGER
+
+    public static void openEnvironmentManagerOfLogin(Scanner in) {
+
+        while (true){
+            UI.clearScreen();
+            UI.showManagerEnvironment();
+            System.out.print("> Enter a option: ");
+            int option = in.nextInt();
+
+            // directing to the chosen option
+            switch (option){
+                case 1:
+                    System.out.println("Login");
+                    break;
+                case 2:
+                    UI.clearScreen();
+                    registerAccount(new ManagerUser(), in);
+                    break;
+                case 3:
+                    UI.clearScreen();
+                    return;
+            }
+        }
+    }
 
     // STUDENT
 
@@ -95,28 +120,27 @@ public class Environments {
     // FOR ALL
     private static void registerAccount(User user, Scanner in){
 
-        User obj = user instanceof StudentUser? new StudentUser() : new ManagerUser();
         System.out.println("\n----- Enter the data ------");
         System.out.print("> full name: ");
         in.nextLine();
-        obj.setFullName(in.nextLine());
+        user.setFullName(in.nextLine());
         System.out.print("> username: ");
-        obj.setUserName(in.nextLine());
+        user.setUserName(in.nextLine());
         System.out.print("> email: ");
-        obj.setEmail(in.nextLine());
+        user.setEmail(in.nextLine());
         System.out.print("> password: ");
         String password1 = in.nextLine();
         System.out.print("> confirm password: ");
         String password2 = in.nextLine();
         if (password1.equals(password2)){
-            obj.setPassword(password1);
+            user.setPassword(password1);
         }
         else {
             System.out.println("password incorrect!");
             registerAccount(user, in);
         }
 
-        if (UserService.createRegister(obj)){
+        if (UserService.createRegister(user)){
             System.out.println("successful registration!\nPress enter to go back");
             in.nextLine();
             return;
