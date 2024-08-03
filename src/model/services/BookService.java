@@ -13,4 +13,9 @@ public class BookService {
         BookDao bookDao = DaoFactory.createBookDao();
         return bookDao.findByStudentId(user);
     }
+
+    public static boolean insertNewBook(Book book){
+        BookDao bookDao = DaoFactory.createBookDao();
+        return bookDao.insert(book);
+    }
 }

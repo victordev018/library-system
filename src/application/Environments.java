@@ -73,6 +73,28 @@ public class Environments {
         }
     }
 
+    public static void makeWithDrawBook(Scanner in) {
+
+        // student data
+        StudentUser student = new StudentUser();
+        System.out.println("> Enter student data: ");
+        System.out.print("> username: ");
+        student.setUserName(in.nextLine());
+
+        StudentUser accountStudent = (StudentUser) UserService.searchLoginData(student);
+
+        if (accountStudent != null){
+
+            System.out.println("\n> how many books? ");
+            int quantityBooks = in.nextInt();
+
+            // insert the books
+            for (int c = 0; c < quantityBooks; c++){
+                //TODO -> insert the books
+            }
+        }
+    }
+
     // STUDENT
 
     public static void openEnvironmentStudentOfLogin(Scanner in) {

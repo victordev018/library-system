@@ -9,4 +9,5 @@ public interface BookDao {
 
     // contracts
     List<Book> findByStudentId(StudentUser user);
+    Boolean insert(Book book);
 }

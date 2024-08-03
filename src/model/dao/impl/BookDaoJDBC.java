@@ -1,14 +1,12 @@
 package model.dao.impl;
 
+import database.DB;
 import database.DBException;
 import model.dao.BookDao;
 import model.entities.Book;
 import model.entities.StudentUser;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -46,6 +44,35 @@ public class BookDaoJDBC implements BookDao {
         }
         catch (SQLException e){
             throw new DBException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Boolean insert(Book book){
+
+        PreparedStatement ps = null;
+
+        try {
+
+            ps = conn.prepareStatement(
+                    "insert into book "
+                       +"(Title, WithDrawDate, DeliveryDate, StudentId) "
+                       +"values (?, ?, ?, ?)"
+            );
+
+            ps.setString(1, book.getTitle());
+            ps.setTimestamp(2, Timestamp.valueOf(book.getWithdrawDate()));
+            ps.setTimestamp(3, Timestamp.valueOf(book.getDeliveryDate()));
+            ps.setInt(4, book.getStudentId());
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 1;
+        }
+        catch (SQLException e){
+            throw new DBException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(ps);
         }
     }
 

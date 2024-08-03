@@ -13,16 +13,18 @@ public class Book {
     private String title;
     private LocalDateTime withdrawDate;
     private LocalDateTime deliveryDate;
+    private Integer studentId;
 
     // constructor
     public Book(){
     }
 
-    public Book(Integer id, String title, LocalDateTime withdrawDate, LocalDateTime deliveryDate) {
+    public Book(Integer id, String title, LocalDateTime withdrawDate, LocalDateTime deliveryDate, Integer studentId) {
         this.id = id;
         this.title = title;
         this.withdrawDate = withdrawDate;
         this.deliveryDate = deliveryDate;
+        this.studentId = studentId;
     }
 
     // getters and setters
@@ -57,6 +59,10 @@ public class Book {
     public void setDeliveryDate(LocalDateTime deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
+
+    public Integer getStudentId(){return studentId;}
+
+    public void setStudentId(Integer studentId){this.studentId = studentId;}
 
     // hashCode and equals
     @Override
