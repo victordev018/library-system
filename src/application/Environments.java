@@ -7,6 +7,8 @@ import model.entities.User;
 import model.services.BookService;
 import model.services.UserService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -58,7 +60,7 @@ public class Environments {
 
             switch (option){
                 case 1:
-                    System.out.println("register withdraw");
+                    makeWithDrawBook(in);
                     break;
                 case 2:
                     System.out.println("show withdraw history");
@@ -75,22 +77,59 @@ public class Environments {
 
     public static void makeWithDrawBook(Scanner in) {
 
+        UI.clearScreen();
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
         // student data
         StudentUser student = new StudentUser();
         System.out.println("> Enter student data: ");
+        in.nextLine();
         System.out.print("> username: ");
         student.setUserName(in.nextLine());
 
         StudentUser accountStudent = (StudentUser) UserService.searchLoginData(student);
 
         if (accountStudent != null){
-
-            System.out.println("\n> how many books? ");
+            UI.clearScreen();
+            System.out.print("\n> how many books? ");
             int quantityBooks = in.nextInt();
 
             // insert the books
-            for (int c = 0; c < quantityBooks; c++){
-                //TODO -> insert the books
+            for (int c = 1; c <= quantityBooks; c++){
+                UI.clearScreen();
+                Book currentBook = new Book();
+                System.out.printf("-------- Book #%d --------\n", c);
+                System.out.print("> Title: ");
+                in.nextLine();
+                currentBook.setTitle(in.nextLine());
+                currentBook.setWithdrawDate(LocalDateTime.now());
+                System.out.print("> standard or custom delivery date? (s/c): ");
+                Character response = in.next().charAt(0);
+                if (response.equals('c')){
+                    System.out.print("> enter delivery date: (dd/MM/yyyy HH:mm:ss): ");
+                    in.nextLine();
+                    currentBook.setDeliveryDate(LocalDateTime.parse(in.nextLine(), fmt));
+                }
+                else{
+                    LocalDateTime deliveryDate = currentBook.getWithdrawDate().plusDays(30);
+                    currentBook.setDeliveryDate(deliveryDate);
+                }
+
+                currentBook.setStudentId(accountStudent.getId());
+                boolean bookAdded = BookService.insertNewBook(currentBook);
+            }
+            UI.clearScreen();
+            System.out.println("!!! books insertion completed !!!");
+            System.out.print("> press enter to go back!");
+            in.nextLine();
+        }
+        else{
+            UI.clearScreen();
+            UI.screenErrorDataLogin("! Student not found !");
+            System.out.print("\n> Enter a option: ");
+            int option = in.nextInt();
+            if (option == 1){
+                makeWithDrawBook(in);
             }
         }
     }
