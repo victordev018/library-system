@@ -2,6 +2,8 @@ package application;
 
 import model.entities.StudentUser;
 
+import java.util.Scanner;
+
 public class UI {
 
     // main menu
@@ -75,5 +77,11 @@ public class UI {
         for (int i = 0; i < 50; i++) {
             System.out.println();
         }
+    }
+
+    public static void pressEnterToGoBack(Scanner in) {
+        System.out.print("> press enter to go back");
+        in.nextLine();
+        in.nextLine();
     }
 }

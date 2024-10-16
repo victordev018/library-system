@@ -5,6 +5,7 @@ import model.entities.ManagerUser;
 import model.entities.StudentUser;
 import model.entities.User;
 import model.services.BookService;
+import model.services.StudentService;
 import model.services.UserService;
 
 import java.time.LocalDateTime;
@@ -47,11 +48,11 @@ public class Environments {
         if (accountAccess != null){
             UI.clearScreen();
             System.out.println("Access granted\n");
-            managerMenu(accountAccess, in);
+            managerMenu(in);
         }
     }
 
-    public static void managerMenu(ManagerUser user, Scanner in){
+    public static void managerMenu(Scanner in){
 
         while (true){
             UI.managerMenu();
@@ -80,13 +81,10 @@ public class Environments {
         UI.clearScreen();
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-        // student data
-        StudentUser student = new StudentUser();
-        System.out.println("> Enter student data: ");
-        in.nextLine();
-        System.out.print("> username: ");
-        student.setUserName(in.nextLine());
+        // get student data
+        StudentUser student = StudentService.getStudentWithUsername(in);
 
+        // searching by account with the username
         StudentUser accountStudent = (StudentUser) UserService.searchLoginData(student);
 
         if (accountStudent != null){
@@ -116,7 +114,7 @@ public class Environments {
                 }
 
                 currentBook.setStudentId(accountStudent.getId());
-                boolean bookAdded = BookService.insertNewBook(currentBook);
+                BookService.insertNewBook(currentBook);
             }
             UI.clearScreen();
             System.out.println("!!! books insertion completed !!!");
@@ -200,16 +198,12 @@ public class Environments {
             user.getList().addAll(bookList);
             UI.clearScreen();
             UI.showStudentBooks(user);
-            System.out.print("> press enter to go back");
-            in.nextLine();
-            in.nextLine();
+            UI.pressEnterToGoBack(in);
         }
         else{
             UI.clearScreen();
             System.out.println("\n! no books !");
-            System.out.print("> press enter to go back");
-            in.nextLine();
-            in.nextLine();
+            UI.pressEnterToGoBack(in);
         }
     }
 
