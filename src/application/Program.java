@@ -1,5 +1,6 @@
 package application;
 
+import controller.ManagerController;
 import controller.StudentController;
 import database.DB;
 import java.util.Scanner;
@@ -21,7 +22,7 @@ public class Program {
             switch (option) {
                 case 1:
                     UI.clearScreen();
-                    Environments.openEnvironmentManagerOfLogin(in);
+                    ManagerController.openEnvironmentManagerOfLogin(in);
                     break;
                 case 2:
                     UI.clearScreen();
