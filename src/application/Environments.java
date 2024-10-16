@@ -213,7 +213,7 @@ public class Environments {
         in.nextLine();
     }
 
-    private static User tryToLogIn(StudentUser user, Scanner in){
+    private static User tryToLogIn(User user, Scanner in){
 
         UI.clearScreen();
         System.out.println("\n----- Login ------");
@@ -232,59 +232,12 @@ public class Environments {
             }
             // data incorrect
             UI.clearScreen();
-            UI.screenErrorDataLogin("! Password incorrect !");
-            System.out.print("> Enter a option: ");
-            int option = in.nextInt();
-            if (option != 2) {
-                studentLogin(in);
-            }
+            System.out.println("\n! Password incorrect !\n");
+            UI.pressEnterToGoBack(in);
         }
         else {
-            System.out.println();
-            UI.screenErrorDataLogin("! unregistered user !");
-            System.out.print("> Enter a option: ");
-            int option = in.nextInt();
-            if (option == 1) {
-                studentLogin(in);
-            }
-        }
-        return null;
-    }
-
-    private static User tryToLogIn(ManagerUser user, Scanner in){
-
-        UI.clearScreen();
-        System.out.println("\n----- Login ------");
-        System.out.print("> username: ");
-        in.nextLine();
-        user.setUserName(in.nextLine());
-        System.out.print("> password: ");
-        user.setPassword(in.nextLine());
-        User obj2 = UserService.searchLoginData(user);
-
-        if (obj2 != null) {
-
-            // if correct password and user
-            if (checkPasswordAndUserName(user, obj2)) {
-                return obj2;
-            }
-            // data incorrect
-            UI.clearScreen();
-            UI.screenErrorDataLogin("! Password incorrect !");
-            System.out.print("> Enter a option: ");
-            int option = in.nextInt();
-            if (option != 2) {
-                managerLogin(in);
-            }
-        }
-        else {
-            System.out.println();
-            UI.screenErrorDataLogin("! unregistered user !");
-            System.out.print("> Enter a option: ");
-            int option = in.nextInt();
-            if (option == 1) {
-                managerLogin(in);
-            }
+            System.out.println("\n\n! unregistered user !\n");
+            UI.pressEnterToGoBack(in);
         }
         return null;
     }
