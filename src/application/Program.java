@@ -1,5 +1,6 @@
 package application;
 
+import controller.StudentController;
 import database.DB;
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class Program {
                     break;
                 case 2:
                     UI.clearScreen();
-                    Environments.openEnvironmentStudentOfLogin(in);
+                    StudentController.openEnvironmentStudentOfLogin(in);
                     break;
                 case 3:
                     DB.closeConnection();
