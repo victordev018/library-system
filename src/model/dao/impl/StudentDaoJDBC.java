@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class StudentDaoJDBC implements StudentDao {
 
@@ -51,7 +52,7 @@ public class StudentDaoJDBC implements StudentDao {
     }
 
     @Override
-    public StudentUser findByUserName(String userName) {
+    public Optional<User> findByUserName(String userName) {
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -67,9 +68,9 @@ public class StudentDaoJDBC implements StudentDao {
             rs = ps.executeQuery();
 
             if (rs.next()){
-                return instantiateStudent(rs);
+                return Optional.of(instantiateStudent(rs));
             }
-            return null;
+            return Optional.empty();
         }
         catch (SQLException e){
             throw new DBException(e.getMessage());

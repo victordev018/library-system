@@ -18,9 +18,9 @@ public class BookService {
         return bookDao.findByStudentId(user);
     }
 
-    public static boolean insertNewBook(Book book){
+    public static void insertNewBook(Book book){
         BookDao bookDao = DaoFactory.createBookDao();
-        return bookDao.insert(book);
+        bookDao.insert(book);
     }
 
     public static void readAndInsertBooks(Scanner in, int quantityBooks, StudentUser student){

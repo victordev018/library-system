@@ -7,6 +7,7 @@ import model.dao.StudentDao;
 import model.entities.StudentUser;
 import model.entities.User;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class UserService {
@@ -25,7 +26,7 @@ public class UserService {
     }
 
     // login
-    public static User searchLoginData(User obj){
+    public static Optional<User> searchLoginData(User obj){
 
         if (obj instanceof  StudentUser){
             StudentDao studentDao = DaoFactory.createStudentDao();
@@ -46,13 +47,13 @@ public class UserService {
         user.setUserName(in.nextLine());
         System.out.print("> password: ");
         user.setPassword(in.nextLine());
-        User obj2 = UserService.searchLoginData(user);
+        Optional<User> obj2 = UserService.searchLoginData(user);
 
-        if (obj2 != null) {
+        if (obj2.isPresent()) {
 
             // if correct password and user
-            if (checkPasswordAndUserName(user, obj2)) {
-                return obj2;
+            if (checkPasswordAndUserName(user, obj2.get())) {
+                return obj2.get();
             }
             // data incorrect
             UI.clearScreen();

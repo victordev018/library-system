@@ -2,7 +2,9 @@ package model.services;
 
 import application.UI;
 import model.entities.StudentUser;
+import model.entities.User;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ManagerService {
@@ -15,15 +17,15 @@ public class ManagerService {
         StudentUser student = StudentService.getStudentWithUsername(in);
 
         // searching by account with the username
-        StudentUser accountStudent = (StudentUser) UserService.searchLoginData(student);
+        Optional<User> accountStudent = UserService.searchLoginData(student);
 
         UI.clearScreen();
-        if (accountStudent != null){
+        if (accountStudent.isPresent()){
             System.out.print("\n> how many books? ");
             int quantityBooks = in.nextInt();
 
             // insert the books
-            BookService.readAndInsertBooks(in, quantityBooks, accountStudent);
+            BookService.readAndInsertBooks(in, quantityBooks, (StudentUser) accountStudent.get());
 
             UI.clearScreen();
             System.out.println("!!! books insertion completed !!!");

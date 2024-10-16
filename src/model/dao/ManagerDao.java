@@ -3,9 +3,11 @@ package model.dao;
 import model.entities.ManagerUser;
 import model.entities.User;
 
+import java.util.Optional;
+
 public interface ManagerDao {
 
     // contracts
     boolean insert(User obj);
-    ManagerUser findByUserName(String userName);
+    Optional<User> findByUserName(String userName);
 }

@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class ManagerDaoJDBC implements ManagerDao {
 
@@ -52,7 +53,7 @@ public class ManagerDaoJDBC implements ManagerDao {
     }
 
     @Override
-    public ManagerUser findByUserName(String userName) {
+    public Optional<User> findByUserName(String userName) {
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -68,9 +69,9 @@ public class ManagerDaoJDBC implements ManagerDao {
             rs = ps.executeQuery();
 
             if (rs.next()){
-                return instantiateManager(rs);
+                return Optional.of(instantiateManager(rs));
             }
-            return null;
+            return Optional.empty();
         }
         catch (SQLException e){
             throw new DBException(e.getMessage());
